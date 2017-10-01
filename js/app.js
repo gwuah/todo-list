@@ -27,7 +27,7 @@ const parseDateTime = function() {
 const createTask = function(name) {
     const dateTime = parseDateTime() ;
     let task = 
-        `<li>
+        `<li data-id="${taskNumber}">
             <input type="checkbox">
             <label>${name}</label>
             <span>${dateTime.day} ${dateTime.month} ${dateTime.date} ${dateTime.year}</span>
@@ -41,7 +41,7 @@ const createTask = function(name) {
 }
 
 const addTask = function() {
-    console.log(`adding New Task With id ${taskId}`);
+    console.log(`adding New Task With id ${taskNumber}`);
     const taskName = taskInput.value;
     const task = createTask(taskName);
     appendTask(document, task);
@@ -64,8 +64,8 @@ const completedTasks = getById("completedTasks");
 const addNewTask = getById("addNewTask")
 const newTask = getById("newTask")
 
-
-
+/* Track Number of tasks created */
+let taskNumber = 0;
 
 
 
