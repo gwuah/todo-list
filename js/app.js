@@ -42,9 +42,9 @@ const addTask = function() {
     console.log(`adding New Task With id ${taskNumber}`);
     const taskName = taskInput.value;
     const task = createTask(taskName);
+    bindEvents(task)
     appendTask(task);
     taskNumber += 1;
-    bindEventListener(task)
 }
 
 const deleteTask = function(parent, taskId) {
@@ -75,7 +75,7 @@ addNewTask.addEventListener("click", e => {
     addTask();
 }); // add task on button press
 
-function bindEventListener(task) {
+function bindEvents(task) {
     const taskComponents = Array.from(task.children);
     const editBtn = taskComponents.find(el => el.className == "edit");
     const delBtn = taskComponents.find(el => el.className == "delete");
