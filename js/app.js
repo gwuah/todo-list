@@ -1,5 +1,15 @@
+
+/* Helper Functions*/
+const getById = function(selector) {
+    return document.getElementById(selector)
+}
+
+const getBySelector = function(selector) {
+    return document.querySelector(selector)
+}
+
 const appendTask = function(document, task) {
-    document.querySelector("#incompleteTasks").innerHTML += task ;
+    incompleteTasks.innerHTML += task ;
 }
 
 const parseDateTime = function() {
@@ -31,10 +41,30 @@ const createTask = function(name) {
 }
 
 const addTask = function() {
-    const taskName = document.querySelector("#newTask").value;
+    console.log(`adding New Task With id ${taskId}`);
+    const taskName = taskInput.value;
     const task = createTask(taskName);
     appendTask(document, task);
 }
+
+const deleteTask = function(parent, taskId) {
+    console.log(`deleting Task ${taskId}`);
+    const trash = getBySelector(`li[data-id="${taskId}"]`);
+    trash.parentElement.removeChild(trash); // i was on some high shit
+}
+
+
+
+
+
+/* Handlers */
+const taskInput = getById("newTask");
+const incompleteTaks = getById("incompleteTasks");
+const completedTasks = getById("completedTasks");
+const addNewTask = getById("addNewTask")
+const newTask = getById("newTask")
+
+
 
 
 
