@@ -39,7 +39,8 @@ const createTask = function(name) {
 }
 
 const addTask = function() {
-    console.log(`adding New Task With id ${taskNumber}`);
+    // add new taask
+    console.log(`adding a new Task With id ${taskNumber}`);
     const taskName = taskInput.value;
     const task = createTask(taskName);
     bindEvents(task)
@@ -48,9 +49,17 @@ const addTask = function() {
 }
 
 const deleteTask = function(parent, taskId) {
+    // find the correct task using it's id and remove it from the parent
     console.log(`deleting Task ${taskId}`);
     const trash = document.querySelector(`li[data-id="${taskId}"]`);
     trash.parentElement.removeChild(trash); // i was on some high shit
+}
+
+const editTask = function(editBox, taskName,) {
+    // hide the label and toggle the edit box
+    taskName.style.display = "none"
+    editBox.style.display = "block";
+    editBox.value = taskName.innerText;
 }
 
 /* Handlers */
@@ -77,13 +86,28 @@ addNewTask.addEventListener("click", e => {
 
 function bindEvents(task) {
     const taskComponents = Array.from(task.children);
+    const taskName = taskComponents.find(el => el.nodeName == "LABEL");
     const editBtn = taskComponents.find(el => el.className == "edit");
     const delBtn = taskComponents.find(el => el.className == "delete");
+    const editBox = taskComponents.find(el => el.className == "editBox");
 
     delBtn.addEventListener("click", e => {
         const parentElement = e.target.parentElement;
         const elementId = e.target.parentElement.getAttribute("data-id");
         // for every delete button created, bind a function that deletes the respective task
         deleteTask(parentElement, elementId) 
+    })
+
+    editBtn.addEventListener("click", e => {
+        // onclick on edit button, edit the task 
+        editTask(editBox, taskName)
+    })
+
+    editBox.addEventListener("change", e=> {
+        // after changes have been made in the edit box, hide the box and reveal the label
+        console.log(e.target.value);
+        taskName.innerText = e.target.value;
+        editBox.style.display = "none";
+        taskName.style.display = "block";
     })
 }
