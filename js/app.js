@@ -19,7 +19,7 @@ const parseDateTime = function() {
         minute: dateTime[6]
     }
 }
-;
+
 const createTask = function(name) {
     const dateTime = parseDateTime() ;
     let task = document.createElement("li");
