@@ -31,6 +31,7 @@ const createTask = function(name) {
             <span>${dateTime.hour} ${dateTime.minute}</span>
             <input type="text" class="editBox">
             <button class="edit">Edit</button>
+            <button style="display:none;" class="saveChanges">Save</button>
             <button class="delete">Delete</button>
         ` ;
     console.log(typeof task)
@@ -58,7 +59,7 @@ const deleteTask = function(parent, taskId) {
 const editTask = function(editBox, taskName,) {
     // hide the label and toggle the edit box
     taskName.style.display = "none"
-    editBox.style.display = "block";
+    editBox.style.display = "block"
     editBox.value = taskName.innerText;
 }
 
@@ -72,6 +73,7 @@ const newTask = getById(document, "newTask");
 
 /* Track Number of tasks created */
 let taskNumber = 0;
+
 
 /* Event Listeners */
 document.addEventListener("keydown", e => {
@@ -90,24 +92,27 @@ function bindEvents(task) {
     const editBtn = taskComponents.find(el => el.className == "edit");
     const delBtn = taskComponents.find(el => el.className == "delete");
     const editBox = taskComponents.find(el => el.className == "editBox");
+    const saveBtn = taskComponents.find(el => el.className =="saveChanges");
 
     delBtn.addEventListener("click", e => {
+        // for every delete button created, bind a function that deletes the respective task
         const parentElement = e.target.parentElement;
         const elementId = e.target.parentElement.getAttribute("data-id");
-        // for every delete button created, bind a function that deletes the respective task
         deleteTask(parentElement, elementId) 
     })
 
     editBtn.addEventListener("click", e => {
-        // onclick on edit button, edit the task 
+        // onclick on edit button, enable editing and show save button
         editTask(editBox, taskName)
+        saveBtn.style.display ="block"
     })
 
-    editBox.addEventListener("change", e=> {
-        // after changes have been made in the edit box, hide the box and reveal the label
-        console.log(e.target.value);
-        taskName.innerText = e.target.value;
+    saveBtn.addEventListener("click", e=> {
+        // after changes have been made in the edit box, hide the editbox, save button and reveal the label
+        console.log(editBox.value);
+        taskName.innerText = editBox.value;
         editBox.style.display = "none";
+        saveBtn.style.display = "none"
         taskName.style.display = "block";
     })
 }
