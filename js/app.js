@@ -47,6 +47,7 @@ const addTask = function() {
     bindEvents(task)
     appendTask(task);
     taskNumber += 1;
+    taskInput.value = "";
 }
 
 const deleteTask = function(parent, taskId) {
