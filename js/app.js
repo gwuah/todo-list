@@ -88,6 +88,7 @@ addNewTask.addEventListener("click", e => {
 
 function bindEvents(task) {
     const taskComponents = Array.from(task.children);
+    const checkBox = taskComponents.find(el => el.type == "checkbox");
     const taskName = taskComponents.find(el => el.nodeName == "LABEL");
     const editBtn = taskComponents.find(el => el.className == "edit");
     const delBtn = taskComponents.find(el => el.className == "delete");
@@ -114,5 +115,9 @@ function bindEvents(task) {
         editBox.style.display = "none";
         saveBtn.style.display = "none"
         taskName.style.display = "block";
+    })
+
+    checkBox.addEventListener("change", e => {
+        checkBox.checked ? completedTasks.appendChild(task) : incompleteTaks.appendChild(task)
     })
 }
