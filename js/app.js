@@ -8,6 +8,14 @@ const appendTask = function(task) {
     incompleteTasks.appendChild(task) ;
 }
 
+const resetInput = function() {
+    taskInput.value = "";
+}
+
+const alterCount = function(arg) {
+    arg == "add" ? taskNumber += 1: taskNumber -= 1;
+}
+
 const parseDateTime = function() {
     const dateTime = /(\w{3}) (\w{3}) (\d{2}) (\d{4}) (\d{2}):(\d{2})/.exec((new Date()));
     return { 
@@ -39,15 +47,14 @@ const createTask = function(name) {
 }
 
 const addTask = function() {
-    // add new taask
-    console.log(`adding a new Task With id ${taskNumber}`);
+    // add new task
     const taskName = taskInput.value;
     if (taskName !== "") {
+        console.log(`adding a new Task With id ${taskNumber}`);
         const task = createTask(taskName);
         bindEvents(task);
         appendTask(task);
-        taskNumber += 1;
-        taskInput.value = "";
+        alterCount("add");
     } else {
         console.log("input box is empty")
     }
@@ -58,18 +65,19 @@ const deleteTask = function(parent, taskId) {
     console.log(`deleting Task ${taskId}`);
     const trash = document.querySelector(`li[data-id="${taskId}"]`);
     trash.parentElement.removeChild(trash); // i was on some high shit
+    alterCount("subtract");
 }
 
 const editTask = function(editBox, taskName,) {
     // hide the label and toggle the edit box
-    taskName.style.display = "none"
-    editBox.style.display = "block"
+    taskName.style.display = "none";
+    editBox.style.display = "block";
     editBox.value = taskName.innerText;
 }
 
 /* Handlers */
 const taskInput = getById(document, "newTask");
-const incompleteTaks = getById(document, "incompleteTasks");
+const incompleteTasks = getById(document, "incompleteTasks");
 const completedTasks = getById(document, "completedTasks");
 const addNewTask = getById(document, "addNewTask");
 const newTask = getById(document, "newTask");
@@ -108,7 +116,7 @@ function bindEvents(task) {
 
     editBtn.addEventListener("click", e => {
         // onclick on edit button, enable editing and show save button
-        editTask(editBox, taskName)
+        editTask(editBox, taskName);
         saveBtn.style.display ="block"
     })
 
@@ -117,11 +125,11 @@ function bindEvents(task) {
         console.log(editBox.value);
         taskName.innerText = editBox.value;
         editBox.style.display = "none";
-        saveBtn.style.display = "none"
+        saveBtn.style.display = "none";
         taskName.style.display = "block";
     })
 
     checkBox.addEventListener("change", e => {
-        checkBox.checked ? completedTasks.appendChild(task) : incompleteTaks.appendChild(task)
+        checkBox.checked ? completedTasks.appendChild(task) : incompleteTasks.appendChild(task)
     })
 }
