@@ -55,6 +55,7 @@ const addTask = function() {
         bindEvents(task);
         appendTask(task);
         alterCount("add");
+        resetInput();
     } else {
         console.log("input box is empty")
     }
@@ -64,7 +65,8 @@ const deleteTask = function(parent, taskId) {
     // find the correct task using it's id and remove it from the parent
     console.log(`deleting Task ${taskId}`);
     const trash = document.querySelector(`li[data-id="${taskId}"]`);
-    trash.parentElement.removeChild(trash); // i was on some high shit
+    // i was on some high shit
+    trash.parentElement.removeChild(trash); 
     alterCount("subtract");
 }
 
@@ -72,7 +74,17 @@ const editTask = function(editBox, taskName,) {
     // hide the label and toggle the edit box
     taskName.style.display = "none";
     editBox.style.display = "block";
+    saveBtn.style.display ="block";
     editBox.value = taskName.innerText;
+}
+
+const saveFunc = function() {
+    // save changes and hide button and edit box
+    console.log(editBox.value);
+    taskName.innerText = editBox.value;
+    editBox.style.display = "none";
+    saveBtn.style.display = "none";
+    taskName.style.display = "block";
 }
 
 /* Handlers */
@@ -117,16 +129,11 @@ function bindEvents(task) {
     editBtn.addEventListener("click", e => {
         // onclick on edit button, enable editing and show save button
         editTask(editBox, taskName);
-        saveBtn.style.display ="block"
     })
 
     saveBtn.addEventListener("click", e=> {
         // after changes have been made in the edit box, hide the editbox, save button and reveal the label
-        console.log(editBox.value);
-        taskName.innerText = editBox.value;
-        editBox.style.display = "none";
-        saveBtn.style.display = "none";
-        taskName.style.display = "block";
+        saveFunc();
     })
 
     checkBox.addEventListener("change", e => {
