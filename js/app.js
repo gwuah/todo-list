@@ -70,7 +70,11 @@ const deleteTask = function(parent, taskId) {
     alterCount("subtract");
 }
 
-const editTask = function(editBox, taskName,) {
+const editTask = function({
+    editBox,
+    taskName,
+    saveBtn
+}) {
     // hide the label and toggle the edit box
     taskName.style.display = "none";
     editBox.style.display = "block";
@@ -78,7 +82,11 @@ const editTask = function(editBox, taskName,) {
     editBox.value = taskName.innerText;
 }
 
-const saveFunc = function() {
+const saveFunc = function({
+    editBox,
+    saveBtn,
+    taskName
+}) {
     // save changes and hide button and edit box
     console.log(editBox.value);
     taskName.innerText = editBox.value;
@@ -128,6 +136,12 @@ function bindEvents(task) {
     const editBox = taskComponents.find(el => el.className == "editBox");
     const saveBtn = taskComponents.find(el => el.className =="saveChanges");
 
+    const payload = {
+            saveBtn,
+            editBox,
+            taskName
+        } // these variables are needed by the two helper functions below in order for them to work
+
     delBtn.addEventListener("click", e => {
         // for every delete button created, bind a function that deletes the respective task
         const parentElement = e.target.parentElement;
@@ -137,12 +151,12 @@ function bindEvents(task) {
 
     editBtn.addEventListener("click", e => {
         // onclick on edit button, enable editing and show save button
-        editTask(editBox, taskName);
+        editTask(payload);
     })
 
     saveBtn.addEventListener("click", e=> {
         // after changes have been made in the edit box, hide the editbox, save button and reveal the label
-        saveFunc();
+        saveFunc(payload);
     })
 
     checkBox.addEventListener("change", e => {
