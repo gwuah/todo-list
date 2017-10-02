@@ -1,5 +1,5 @@
 
-/* Helper Functions*/
+/*--- Helper Functions ---*/
 const getById = function(base, selector) {
     return base.getElementById(selector)
 }
@@ -87,12 +87,19 @@ const saveFunc = function() {
     taskName.style.display = "block";
 }
 
-/* Handlers */
+/*--- End of Helper Functions ---*/
+
+
+
+/*--- Handlers ---*/
 const taskInput = getById(document, "newTask");
 const incompleteTasks = getById(document, "incompleteTasks");
 const completedTasks = getById(document, "completedTasks");
 const addNewTask = getById(document, "addNewTask");
 const newTask = getById(document, "newTask");
+
+/*---End of Handlers ---*/
+
 
 
 /* Track Number of tasks created */
@@ -109,6 +116,8 @@ document.addEventListener("keydown", e => {
 addNewTask.addEventListener("click", e => {
     addTask();
 }); // add task on button press
+
+
 
 function bindEvents(task) {
     const taskComponents = Array.from(task.children);
