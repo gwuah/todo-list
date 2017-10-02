@@ -34,7 +34,6 @@ const createTask = function(name) {
             <button style="display:none;" class="saveChanges">Save</button>
             <button class="delete">Delete</button>
         ` ;
-    console.log(typeof task)
     return task
     
 }
@@ -43,11 +42,15 @@ const addTask = function() {
     // add new taask
     console.log(`adding a new Task With id ${taskNumber}`);
     const taskName = taskInput.value;
-    const task = createTask(taskName);
-    bindEvents(task)
-    appendTask(task);
-    taskNumber += 1;
-    taskInput.value = "";
+    if (taskName !== "") {
+        const task = createTask(taskName);
+        bindEvents(task);
+        appendTask(task);
+        taskNumber += 1;
+        taskInput.value = "";
+    } else {
+        console.log("input box is empty")
+    }
 }
 
 const deleteTask = function(parent, taskId) {
